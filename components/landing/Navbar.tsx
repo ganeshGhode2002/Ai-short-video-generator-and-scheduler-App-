@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { VideoIcon } from "lucide-react";
 import { ModeToggle } from "@/components/mode-toggle";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export function Navbar() {
     return (
@@ -35,12 +36,24 @@ export function Navbar() {
                 </nav>
                 <div className="flex items-center gap-4">
                     <ModeToggle />
-                    <Link href="/login" className="hidden sm:block text-sm font-medium text-muted-foreground hover:text-foreground">
-                        Sign In
-                    </Link>
-                    <Button className="rounded-full bg-blue-600 hover:bg-blue-700 text-white px-6">
-                        Get Started
-                    </Button>
+                    <SignedOut>
+                        <Link href="/sign-in" className="hidden sm:block text-sm font-medium text-muted-foreground hover:text-foreground">
+                            Sign In
+                        </Link>
+                    </SignedOut>
+                    <SignedIn>
+                        <UserButton />
+                    </SignedIn>
+                    <SignedOut>
+                        <Button className="rounded-full bg-blue-600 hover:bg-blue-700 text-white px-6" asChild>
+                            <Link href="/sign-up">Get Started</Link>
+                        </Button>
+                    </SignedOut>
+                    <SignedIn>
+                        <Button className="rounded-full bg-blue-600 hover:bg-blue-700 text-white px-6" asChild>
+                            <Link href="/dashboard">Dashboard</Link>
+                        </Button>
+                    </SignedIn>
                 </div>
             </div>
         </header>

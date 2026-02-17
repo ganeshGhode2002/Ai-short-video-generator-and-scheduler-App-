@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 
 export function Hero() {
     return (
-        <section className="relative overflow-hidden pt-20 pb-16 md:pt-32 md:pb-32">
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-16 md:pt-32 md:pb-32">
             {/* Background Gradients */}
             <div className="absolute top-0 left-1/2 -z-10 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-purple-900/40 blur-[100px] opacity-50 dark:opacity-40" />
 
@@ -29,17 +30,34 @@ export function Hero() {
                 </p>
 
                 <div className="flex flex-col gap-4 sm:flex-row sm:gap-4 mt-6 w-full justify-center">
-                    <Button size="lg" className="h-12 px-8 rounded-md bg-white text-black hover:bg-white/90 text-base font-medium" asChild>
-                        <Link href="/login">
-                            Start Creating for Free <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                    </Button>
-                    {/* Placeholder for the second button/input from reference - using a secondary styled button */}
-                    <Button size="lg" variant="outline" className="h-12 px-8 rounded-md border-white/20 bg-transparent text-base hover:bg-white/10" asChild>
-                        <Link href="#features">
-                            How it works
-                        </Link>
-                    </Button>
+                    <SignedOut>
+                        <div className="flex flex-col gap-4 sm:flex-row sm:gap-4 w-full justify-center">
+                            <SignInButton mode="modal">
+                                <Button size="lg" className="h-12 px-8 rounded-md bg-white text-black hover:bg-white/90 text-base font-medium cursor-pointer">
+                                    Start Creating for Free <ArrowRight className="ml-2 h-4 w-4" />
+                                </Button>
+                            </SignInButton>
+                            <Button size="lg" variant="outline" className="h-12 px-8 rounded-md border-white/20 bg-transparent text-base hover:bg-white/10" asChild>
+                                <Link href="#features">
+                                    How it works
+                                </Link>
+                            </Button>
+                        </div>
+                    </SignedOut>
+                    <SignedIn>
+                        <div className="flex flex-col gap-4 sm:flex-row sm:gap-4 w-full justify-center">
+                            <Button size="lg" className="h-12 px-8 rounded-md bg-white text-black hover:bg-white/90 text-base font-medium" asChild>
+                                <Link href="/dashboard">
+                                    Go to Dashboard <ArrowRight className="ml-2 h-4 w-4" />
+                                </Link>
+                            </Button>
+                            <Button size="lg" variant="outline" className="h-12 px-8 rounded-md border-white/20 bg-transparent text-base hover:bg-white/10" asChild>
+                                <Link href="#features">
+                                    How it works
+                                </Link>
+                            </Button>
+                        </div>
+                    </SignedIn>
                 </div>
 
                 <div className="mt-16 sm:mt-24 space-y-6">
